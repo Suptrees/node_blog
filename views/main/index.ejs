@@ -62,12 +62,16 @@
         <br>
         <div class="input-group">
           <span class="input-group-addon">密码</span>
-          <input type="text" class="form-control" name="password" placeholder="请输入密码">
+          <input type="password" class="form-control" name="password" placeholder="请输入密码">
         </div>
         <br>
         <button type="button" name="button" class="btn btn-primary form-control"  id="login-btn">登录</button>
         <br><br>
         <a href="javascripts:;" class="col-md-offset-4">没有账号？点击注册</a>
+        <div class="alert alert-success alert-dismissable hide" role="alert">
+          <button class="close" type="button">×</button>
+          <span>恭喜您操作成功！</span>
+        </div>
       </div>
       <!-- 注册面板 -->
       <div id="reg"  class="hide">
@@ -79,12 +83,12 @@
         <br>
         <div class="input-group">
           <span class="input-group-addon">输入密码</span>
-          <input type="text" class="form-control" name="password" placeholder="请输入密码">
+          <input type="password" class="form-control" name="password" placeholder="请输入密码">
         </div>
         <br>
         <div class="input-group">
           <span class="input-group-addon">确认密码</span>
-          <input type="text" class="form-control" name="repassword" placeholder="请再次输入密码">
+          <input type="password" class="form-control" name="repassword" placeholder="请再次输入密码">
         </div>
         <br>
         <button type="button" name="button" class="btn btn-primary form-control" id="reg-btn">注册</button>
@@ -101,7 +105,7 @@
         <div class="panel panel-primary">
         	<div class="panel-heading">用户面板</div>
           <div class="panel-body">
-            <h3>欢迎，xxx</h3>
+            <h3>欢迎，管理员！</h3>
             <p>
               <button type="button" name="button" class="btn btn-danger form-control">注销</button>
             </p>

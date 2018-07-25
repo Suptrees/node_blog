@@ -12,7 +12,7 @@ $(() => {
     // 获取注册按钮
     const $regBtn = $("#reg-btn");
     // 获取警告框
-    const $warningBox = $("#reg .alert");
+    const $warningBox = $(".alert");
 
     // 切换到登录/注册界面的方法
     (() => {
@@ -64,6 +64,30 @@ $(() => {
                         $warningBox.find("span").html("恭喜您" + result.message);
                         $warningBox.addClass("alert-success")
                         $warningBox.removeClass("hide alert-danger");
+                    }
+                }
+            });
+        });
+        // 用户登录
+        $loginBtn.on("click", () => {
+            $.ajax({
+                type: "post",
+                url: "/api/user/login",
+                data: {
+                    username: $("#login [name='username']").val(),
+                    password: $("#login [name='password']").val()
+                },
+                dataType: "json",
+                success: (result) => {
+                    if (result.code) {
+                        $warningBox.find("span").html("警告：" + result.message);
+                        $warningBox.addClass("alert-danger")
+                        $warningBox.removeClass("hide alert-success");
+                    } else {
+                        // 登录成功，隐藏登录界面
+                        $loginDiv.hide();
+                        // 显示用户界面
+                        $("#user-info").removeClass("hide");
                     }
                 }
             });

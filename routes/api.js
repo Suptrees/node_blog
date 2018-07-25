@@ -29,7 +29,6 @@ router.use((req, res, next) => {
             1.用户名是否已存在
 */
 router.post("/user/register", (req, res, next) => {
-    console.log(req.body);
     // 用户名
     let username = req.body.username;
     // 密码
@@ -86,6 +85,60 @@ router.post("/user/register", (req, res, next) => {
         }
     });
 });
+
+/*
+    用户登录的接口
+        提交的验证：
+            1.用户名不能为空
+            2.密码不能为空
+        数据库的验证：
+            1.用户名是否存在
+            2.若存在密码是否正确
+*/
+router.post("/user/login", (req, res, next) => {
+    // 用户名
+    let username = req.body.username;
+    // 密码
+    let password = req.body.password;
+    console.log(password);
+    // 用户名不能为空
+    if (username === "") {
+        responseData.code = 1;
+        responseData.message = "用户名不能为空！";
+        res.json(responseData);
+        return;
+    }
+    // 密码不能为空
+    if (password === "") {
+        responseData.code = 2;
+        responseData.message = "密码不能为空！";
+        res.json(responseData);
+        return;
+    }
+    // 向数据库查询，用户是否存在
+    userModel.findOne({username: username}, (err, user) => {
+        // 如果存在该用户
+        if (user) {
+            // 验证密码是否正确
+            if (user.password === password) {
+                responseData.message = "登录成功！";
+                res.json(responseData);
+                return;
+            } else {
+                responseData.code = 5;
+                responseData.message = "密码不正确！";
+                res.json(responseData);
+                return;
+            }
+        } else {
+            responseData.code = 6;
+            responseData.message = "该用户名不存在！";
+            res.json(responseData);
+            return;
+        }
+    });
+});
+
 
 // 将其暴露给外部
 module.exports = router;
