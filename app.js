@@ -11,6 +11,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 // 引入cookies模块
 const Cookies = require("cookies");
+// 引用用户模型对象
+const userModel = require("./models/user");
 
 // 实例化一个express对象
 let app = express();
@@ -36,11 +38,18 @@ app.use((req, res, next) => {
     // 如果客户端中有cookie信息
     if (req.cookies.get("userInfo")) {
         // 将其解析后存入req.userInfo中
-        req.userInfo = JSON.parse(req.cookies.get("userInfo"))
+        req.userInfo = JSON.parse(req.cookies.get("userInfo"));
+        // 根据用户id从数据库中查询出当前登录用户的信息
+        userModel.findById(req.userInfo.userid).then((user) => {
+            // 以此判断当前用户是否为管理员
+            req.userInfo.isadmin = user.isadmin;
+            next();
+        });
 
+    } else {
+        // 继续下一个中间件
+        next();
     }
-    // 继续下一个中间件
-    next();
 });
 
 /*

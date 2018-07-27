@@ -107,7 +107,14 @@
         <div class="panel panel-primary">
         	<div class="panel-heading">用户面板</div>
           <div class="panel-body">
-            <h3>欢迎，<%=userInfo.username%>！</h3>
+            <%if (userInfo.isadmin) {%>
+            <h3>欢迎尊贵的管理员，<%=userInfo.username%>!</h3>
+            <p>
+              <button type="button" name="button" class="btn btn-primary form-control">进入控制台</button>
+            </p>
+            <%} else {%>
+            <h3>欢迎您，<%=userInfo.username%>！</h3>
+            <%}%>
             <p>
               <button type="button" name="button" id="logout" class="btn btn-danger form-control">注销</button>
             </p>
