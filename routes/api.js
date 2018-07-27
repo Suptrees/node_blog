@@ -122,6 +122,13 @@ router.post("/user/login", (req, res, next) => {
             // 验证密码是否正确
             if (user.password === password) {
                 responseData.message = "登录成功！";
+                // 在responseData中新建一个用户信息的属性
+                responseData.userInfo = {
+                    username: user.username,
+                    userid: user._id
+                };
+                // 向客户端发送cookie信息
+                req.cookies.set("userInfo", JSON.stringify(responseData.userInfo));
                 res.json(responseData);
                 return;
             } else {
@@ -139,6 +146,12 @@ router.post("/user/login", (req, res, next) => {
     });
 });
 
+// 用户登出接口
+router.get("/user/logout", (req, res, next) => {
+    // 将cookie设为null
+    req.cookies.set("userinfo", null);
+    res.json(responseData);
+});
 
 // 将其暴露给外部
 module.exports = router;

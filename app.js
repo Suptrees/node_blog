@@ -9,6 +9,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 // 引入body-parser模块
 const bodyParser = require("body-parser");
+// 引入cookies模块
+const Cookies = require("cookies");
 
 // 实例化一个express对象
 let app = express();
@@ -25,6 +27,23 @@ app.set("view engine", "ejs");
 app.use("/public", express.static(path.join(__dirname, "/public")));
 // body-parser配置
 app.use(bodyParser.urlencoded({extended: true}));
+// cookies配置
+app.use((req, res, next) => {
+    // 向请求体对象中新加一个cookies属性，对应当前请求，相应
+    req.cookies = new Cookies(req, res);
+    // 给req对象增加一个用户信息的属性，以便所有路由都能读取
+    req.userInfo = {};
+    // 如果客户端中有cookie信息
+    if (req.cookies.get("userInfo")) {
+        // 将其解析后存入req.userInfo中
+        req.userInfo = JSON.parse(req.cookies.get("userInfo"))
+
+    } else {
+
+    }
+    // 继续下一个中间件
+    next();
+});
 
 /*
 路由处理

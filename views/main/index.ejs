@@ -52,6 +52,7 @@
     </div>
     <!-- 登录、注册、用户面板部分 -->
     <div class="col-md-4">
+      <%if (!userInfo.userid) {%>
       <!-- 登录面板 -->
       <div id="login">
         <h2>登录</h2>
@@ -100,18 +101,20 @@
           <span>恭喜您操作成功！</span>
         </div>
       </div>
+      <%} else {%>
       <!-- 用户面板 -->
-      <div id="user-info" class="hide">
+      <div id="user-info">
         <div class="panel panel-primary">
         	<div class="panel-heading">用户面板</div>
           <div class="panel-body">
-            <h3>欢迎，管理员！</h3>
+            <h3>欢迎，<%=userInfo.username%>！</h3>
             <p>
               <button type="button" name="button" class="btn btn-danger form-control">注销</button>
             </p>
           </div>
         </div>
       </div>
+      <%}%>
     </div>
   </div>
   <script src="/public/js/3.3.1-jquery-min.js"></script>

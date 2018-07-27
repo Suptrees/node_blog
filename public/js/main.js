@@ -84,10 +84,8 @@ $(() => {
                         $warningBox.addClass("alert-danger")
                         $warningBox.removeClass("hide alert-success");
                     } else {
-                        // 登录成功，隐藏登录界面
-                        $loginDiv.hide();
-                        // 显示用户界面
-                        $("#user-info").removeClass("hide");
+                        // 重新加载页面
+                        window.location.reload();
                     }
                 }
             });
