@@ -100,7 +100,6 @@ router.post("/user/login", (req, res, next) => {
     let username = req.body.username;
     // 密码
     let password = req.body.password;
-    console.log(password);
     // 用户名不能为空
     if (username === "") {
         responseData.code = 1;
@@ -149,7 +148,7 @@ router.post("/user/login", (req, res, next) => {
 // 用户登出接口
 router.get("/user/logout", (req, res, next) => {
     // 将cookie设为null
-    req.cookies.set("userinfo", null);
+    req.cookies.set("userInfo", null);
     res.json(responseData);
 });
 

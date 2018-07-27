@@ -9,6 +9,8 @@ $(() => {
     const $regDiv = $("#reg");
     // 获取登录按钮
     const $loginBtn = $("#login-btn");
+    // 获取注销按钮
+    const $logoutBtn = $("#logout");
     // 获取注册按钮
     const $regBtn = $("#reg-btn");
     // 获取警告框
@@ -85,6 +87,18 @@ $(() => {
                         $warningBox.removeClass("hide alert-success");
                     } else {
                         // 重新加载页面
+                        window.location.reload();
+                    }
+                }
+            });
+        });
+        // 用户登出
+        $logoutBtn.on("click", () => {
+            $.ajax({
+                type: "get",
+                url: "/api/user/logout",
+                success: (result) => {
+                    if (result) {
                         window.location.reload();
                     }
                 }

@@ -38,8 +38,6 @@ app.use((req, res, next) => {
         // 将其解析后存入req.userInfo中
         req.userInfo = JSON.parse(req.cookies.get("userInfo"))
 
-    } else {
-
     }
     // 继续下一个中间件
     next();
