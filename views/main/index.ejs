@@ -110,7 +110,7 @@
             <%if (userInfo.isadmin) {%>
             <h3>欢迎尊贵的管理员，<%=userInfo.username%>!</h3>
             <p>
-              <button type="button" name="button" class="btn btn-primary form-control">进入控制台</button>
+              <a href="/admin" class="btn btn-primary form-control">进入控制台</a>
             </p>
             <%} else {%>
             <h3>欢迎您，<%=userInfo.username%>！</h3>

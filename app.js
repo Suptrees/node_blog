@@ -55,10 +55,12 @@ app.use((req, res, next) => {
 /*
 路由处理
 */
-// 所有通过"/"的url，都由./routes/main.js文件进行处理
+// 所有"/"的url，都由./routes/main.js文件进行处理
 app.use("/", require("./routes/main.js"));
-// 所有通过"/api"的url，都由./routes/api.js文件进行处理
+// 所有"/api"的url，都由./routes/api.js文件进行处理
 app.use("/api", require("./routes/api.js"));
+// 所有"/admin"的url，都由./routes/admin.js文件进行处理
+app.use("/admin", require("./routes/admin.js"));
 
 // 连接数据库
 mongoose.connect("mongodb://localhost:27017/blog_db", (err) => {
@@ -68,6 +70,7 @@ mongoose.connect("mongodb://localhost:27017/blog_db", (err) => {
         app.listen(8080);
     } else {
         // 出错则抛出异常
+        console.log("数据库连接失败，请检查！");
         throw err;
     }
 });
