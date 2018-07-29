@@ -25,5 +25,22 @@ router.get("/", (req, res, next) => {
     });
 });
 
+// 用户管理首页
+router.get("/user", (req, res, next) => {
+    // 从数据库中查询所有注册用户
+    userModel.find({}, (err, users) => {
+        if (!err) {
+            // 渲染用户管理模板
+            res.render("admin/user/index", {
+                userInfo: req.userInfo,
+                users: users
+            });
+        } else {
+            // 抛出错误
+            throw err;
+        }
+    });
+});
+
 // 将其暴露给外部
 module.exports = router;
