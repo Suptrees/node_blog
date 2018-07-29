@@ -1,6 +1,8 @@
 // 引入相关模块
 const express = require("express");
 const userModel = require("../models/user");
+// 引入自定义的分页渲染模块
+const pagination = require("../my_modules/pagination");
 
 // 实例化一个Routr对象
 const router = express.Router();
@@ -28,7 +30,7 @@ router.get("/", (req, res, next) => {
 // 用户管理首页
 router.get("/user", (req, res, next) => {
     // 从数据库中查询所有注册用户
-    userModel.find({}, (err, users) => {
+    /*userModel.find({}, (err, users) => {
         if (!err) {
             // 渲染用户管理模板
             res.render("admin/user/index", {
@@ -39,6 +41,22 @@ router.get("/user", (req, res, next) => {
             // 抛出错误
             throw err;
         }
+    });*/
+
+    // 调用自定义的分页渲染方法
+    pagination({
+        // 每页显示的条数
+        limit: 10,
+        // 需要操作的数据库模型
+        model: userModel,
+        // 需要控制分页的url
+        url: "/admin/user",
+        // 渲染的模板页面
+        ejs: "admin/user",
+        res: res,
+        req: req,
+        // 查询的条件
+        where: {}
     });
 });
 
