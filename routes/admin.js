@@ -29,7 +29,7 @@ router.get("/", (req, res, next) => {
 
 // 用户管理首页
 router.get("/user", (req, res, next) => {
-    // 从数据库中查询所有注册用户
+    // 从数据库中查询所有注册用户(已弃用，用了下面分页渲染方法)
     /*userModel.find({}, (err, users) => {
         if (!err) {
             // 渲染用户管理模板
@@ -53,10 +53,10 @@ router.get("/user", (req, res, next) => {
         url: "/admin/user",
         // 渲染的模板页面
         ejs: "admin/user",
-        res: res,
-        req: req,
         // 查询的条件
-        where: {}
+        where: {},
+        res: res,
+        req: req
     });
 });
 
