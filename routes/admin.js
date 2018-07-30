@@ -82,5 +82,13 @@ router.get("/category", (req, res, next) => {
     });
 });
 
+// 分类添加的首页
+router.get("/category/add", (req, res, next) => {
+    // 渲染分类添加模板
+    res.render("admin/category/add", {
+        userInfo: req.userInfo
+    });
+});
+
 // 将其暴露给外部
 module.exports = router;
