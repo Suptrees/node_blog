@@ -1,6 +1,7 @@
 // 引入相关模块
 const express = require("express");
 const userModel = require("../models/user");
+const categoryModel = require("../models/category");
 // 引入自定义的分页渲染模块
 const pagination = require("../my_modules/pagination");
 
@@ -35,7 +36,7 @@ router.get("/user", (req, res, next) => {
             // 渲染用户管理模板
             res.render("admin/user/index", {
                 userInfo: req.userInfo,
-                users: users
+                docs: users
             });
         } else {
             // 抛出错误
@@ -52,9 +53,30 @@ router.get("/user", (req, res, next) => {
         // 需要控制分页的url
         url: "/admin/user",
         // 渲染的模板页面
-        ejs: "admin/user",
+        ejs: "admin/user/index",
         // 查询的条件
         where: {},
+        // 给模板绑定参数的名称
+        res: res,
+        req: req
+    });
+});
+
+// 文章分类管理首页
+router.get("/category", (req, res, next) => {
+    // 调用自定义的分页渲染方法
+    pagination({
+        // 每页显示的条数
+        limit: 10,
+        // 需要操作的数据库模型
+        model: categoryModel,
+        // 需要控制分页的url
+        url: "/admin/category",
+        // 渲染的模板页面
+        ejs: "admin/category/index",
+        // 查询的条件
+        where: {},
+        docs: "users",
         res: res,
         req: req
     });

@@ -13,7 +13,9 @@
         res: res,
         req: req,
         // 查询的条件
-        where: {}
+        where: {},
+        // 名称
+        docs
     }
 */
 
@@ -42,10 +44,10 @@ const pagination = (object) => {
         // 跳过数据的条数
         let skip = (page - 1) * limit;
         // 分页查询出数据
-        object.model.find(object.where).skip(skip).limit(limit).then((users) => {
+        object.model.find(object.where).skip(skip).limit(limit).then((docs) => {
             object.res.render(object.ejs, {
                 userInfo: object.req.userInfo,
-                users: users,
+                docs: docs,
                 page: page,
                 pages: pages,
                 limit: limit,

@@ -16,12 +16,12 @@
         </tr>
       </thead>
       <tbody>
-        <%for(let i = 0, len = users.length; i < len; i++){%>
+        <%for(let i = 0, len = docs.length; i < len; i++){%>
           <tr>
-            <td><%=users[i]._id%></td>
-            <td><%=users[i].username%></td>
-            <td><%=users[i].password%></td>
-            <td><%=(users[i].isadmin?"是":"")%></td>
+            <td><%=docs[i]._id%></td>
+            <td><%=docs[i].username%></td>
+            <td><%=docs[i].password%></td>
+            <td><%=(docs[i].isadmin?"是":"")%></td>
           </tr>
         <%}%>
       </tbody>
