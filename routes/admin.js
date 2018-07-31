@@ -90,5 +90,51 @@ router.get("/category/add", (req, res, next) => {
     });
 });
 
+// 分类的保存
+router.post("/category/add", (req, res, next) => {
+    // 获取分类名称，默认为""
+    let name = req.body.name || "";
+
+    // 如果名称为空
+    if (name === "") {
+        // 渲染一个错误提示
+        res.render("admin/error", {
+            userInfo: req.userInfo,
+            url: null,
+            message: "分类名称不能为空！"
+        });
+        return;
+    }
+    // 从数据库中查询该名称是否已存在
+    categoryModel.findOne({name: name}, (err, docs) => {
+        // 如果数库库中已存在该名称
+        if (docs) {
+            // 渲染一个错误提示
+            res.render("admin/error", {
+                userInfo: req.userInfo,
+                url: null,
+                message: "该分类名称已存在！"
+            });
+            return;
+        } else {
+            // 不存在则新建一个数据
+            categoryModel.create({
+                name: name
+            }, (err) => {
+                if (!err) {
+                    // 渲染一个错误提示
+                    res.render("admin/success", {
+                        userInfo: req.userInfo,
+                        message: "添加成功！",
+                        // 跳转到该路由
+                        url: "/admin/category"
+                    });
+                    return;
+                }
+            });
+        }
+    });
+});
+
 // 将其暴露给外部
 module.exports = router;
