@@ -136,5 +136,119 @@ router.post("/category/add", (req, res, next) => {
     });
 });
 
+// 分类的修改界面
+router.get("/category/edit", (req, res, next) => {
+    // 获取用户提交过来的id
+    let id = req.query.id || "";
+    // 根据id从数据库中查询相关数据
+    categoryModel.findOne({_id: id}, (err, category) => {
+        if (category) {
+            // 如何数据存在则渲染修改界面
+            res.render("admin/category/edit", {
+                userInfo: req.userInfo,
+                category: category
+            });
+        } else {
+            // 若不存在渲染错误提示面板
+            res.render("admin/error", {
+                userInfo: req.userInfo,
+                url: null,
+                message: "该分类不存在！"
+            });
+        }
+    });
+});
+
+// 分类修改的保存
+router.post("/category/edit", (req, res, next) => {
+    // 获取修改后的id及名称
+    let id = req.query.id;
+    let name = req.body.name;
+
+    // 根据id从数据库中查询相关数据
+    categoryModel.findById(id, (err, category) => {
+        if (category) {
+            // 若数据存在
+            // 简单验证---如果数据没修改
+            if (name === category.name) {
+                res.render("admin/success", {
+                    url: "/admin/category",
+                    userInfo: req.userInfo,
+                    message: "修改成功！"
+                });
+                return;
+            }
+            // 查询用户修改的分类是否与数据库中的冲突
+            categoryModel.findOne({
+                _id: {$ne: id},
+                name: name
+            }, (err, docs) => {
+                if (docs) {
+                    // 数据冲突
+                    res.render("admin/error", {
+                        userInfo: req.userInfo,
+                        url: null,
+                        message: "该分类已存在！"
+                    });
+                    return;
+                } else {
+                    // 更新数据
+                    categoryModel.update({_id: id}, {$set: {name: name}}, (err) => {
+                        if (!err) {
+                            // 不出错
+                            res.render("admin/success", {
+                                userInfo: req.userInfo,
+                                url: "/admin/category",
+                                message: "修改成功！"
+                            });
+                            return;
+                        } else {
+                            // 出错
+                            res.render("admin/error", {
+                                userInfo: req.userInfo,
+                                url: null,
+                                message: "修改失败！"
+                            });
+                            return;
+                        }
+                    });
+                }
+            });
+        } else {
+            // 若不存在
+            res.render("admin/error", {
+                userInfo: req.userInfo,
+                url: null,
+                message: "该分类不存在！"
+            });
+            return;
+        }
+    });
+});
+
+// 分类的删除
+router.get("/category/delete", (req, res, next) => {
+    // 获取需要删除的分类id
+    let id = req.query.id || "";
+    // 从数据库中删除数据
+    categoryModel.remove({_id: id}, (err) => {
+        if (!err) {
+            // 删除成功
+            res.render("admin/success", {
+                url: "/admin/category",
+                userInfo: req.userInfo,
+                message: "删除成功！"
+            });
+        } else {
+            // 删除失败
+            res.render("admin/error", {
+                url: null,
+                userInfo: req.userInfo,
+                message: "删除失败！"
+            });
+        }
+    });
+});
+
 // 将其暴露给外部
 module.exports = router;
