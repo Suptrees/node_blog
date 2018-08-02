@@ -14,6 +14,8 @@
         req: req,
         // 查询的条件
         where: {},
+        // 联合查询的条件
+        populate: []
         // 名称
         docs
     }
@@ -32,6 +34,8 @@ const pagination = (object) => {
     let limit = object.limit || 10;
     // 总页数
     let pages = 0;
+    // 跨集合查询的条件
+    let populate = object.populate || [];
     // 查询该文档的数据条数
     object.model.countDocuments(object.where).then((count) => {
         // 根据总条数计算总页数
@@ -44,7 +48,7 @@ const pagination = (object) => {
         // 跳过数据的条数
         let skip = (page - 1) * limit;
         // 分页查询出数据
-        object.model.find(object.where).skip(skip).limit(limit).then((docs) => {
+        object.model.find(object.where).populate(populate).skip(skip).limit(limit).then((docs) => {
             object.res.render(object.ejs, {
                 userInfo: object.req.userInfo,
                 docs: docs,
