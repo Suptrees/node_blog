@@ -36,6 +36,8 @@ const pagination = (object) => {
     let pages = 0;
     // 跨集合查询的条件
     let populate = object.populate || [];
+    // 其他信息
+    let other = object.other || null;
     // 查询该文档的数据条数
     object.model.countDocuments(object.where).then((count) => {
         // 根据总条数计算总页数
@@ -56,7 +58,8 @@ const pagination = (object) => {
                 pages: pages,
                 limit: limit,
                 url: object.url,
-                count: count
+                count: count,
+                other: other
             });
         });
     });
