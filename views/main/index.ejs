@@ -1,40 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!--引用bootstrap样式-->
-  <link rel="stylesheet" href="/public/css/bootstrap.min.css">
-  <title>TFLIN'BLOG</title>
-</head>
-<body>
-  <!-- 页头 -->
-  <header>
-    <header>
-      <nav class="navbar navbar-default">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">TFL'BLOG</a>
-        </div>
-        <div class="container">
-          <ul class="nav navbar-nav">
-              <% if (!other.categoryId) {%>
-                <li  class="active"><a href="/">首页</a></li>
-              <% } else {%>
-                <li><a href="/">首页</a></li>
-              <% } %>
-              <% for (let i = 0, len = other.categories.length; i < len; i++) {%>
-                <% if (other.categoryId === other.categories[i].id) {%>
-                  <li class="active"><a href="/?categoryId=<%= other.categories[i].id %>"><%= other.categories[i].name %></a></li>
-                <% } else {%>
-                  <li><a href="/?categoryId=<%= other.categories[i].id %>"><%= other.categories[i].name %></a></li>
-                <% } %>
-              <% } %>
-          </ul>
-        </div>
-      </nav>
-    </header>
-  </header>
+<%- include("header") %>
   <!-- 主体 -->
   <div class="container">
     <!-- 内容部分 -->
@@ -43,7 +7,7 @@
         <div class="well">
           <h3><%=docs[i].title%></h3>
           <p><%=docs[i].description%></p>
-          <a href="javascript:;" class="btn btn-info">阅读全文</a>
+          <a href="/views?contentId=<%= docs[i].id %>" class="btn btn-info">阅读全文</a>
           <span class="text-info pull-right">阅读量：<%=docs[i].views%> | 时间：<%=docs[i].addTime%> | 作者:<%=docs[i].author.username%> | 分类:<%=docs[i].category.name%></span>
         </div>
       <% } %>
@@ -124,8 +88,6 @@
       <%}%>
     </div>
   </div>
-  <script src="/public/js/3.3.1-jquery-min.js"></script>
-  <script src="/public/js/bootstrap.min.js"></script>
   <script src="/public/js/main.js"></script>
 </body>
 </html>
