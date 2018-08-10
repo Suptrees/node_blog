@@ -17,13 +17,15 @@ let where = {};
 router.use("/", (req, res, next) => {
     // 接收前端传递过来的需要查询分类的id
     if (req.query.categoryId) {
+        // 如果前端传有数据过来
         other.categoryId = req.query.categoryId;
         where.category = req.query.categoryId;
     } else {
+        // 没有则置空，以方便模板引擎判断渲染不同的面板
         where = {};
         other.categoryId = null;
     }
-
+    // 从数据库中查询出分类信息
     categoryModel.find({}, (err, categories) => {
         if (!err) {
             // 如果不出错
@@ -32,7 +34,7 @@ router.use("/", (req, res, next) => {
             throw err;
         }
     });
-
+    // 继续向下一个中间件走
     next();
 });
 
