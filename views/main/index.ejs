@@ -1,9 +1,10 @@
+<!-- 引入页头 -->
 <%- include("header") %>
   <!-- 主体 -->
   <div class="container">
     <!-- 内容部分 -->
     <div class="col-md-8">
-      <% for(let i = 0, len = docs.length; i < len; i++) { %>
+      <% for(let i = docs.length-1; i >= 0; i--) { %>
         <div class="well">
           <h3><%=docs[i].title%></h3>
           <p><%=docs[i].description%></p>

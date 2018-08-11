@@ -2,11 +2,24 @@
 const express = require("express");
 const categoryModel = require("../models/category");
 const contentModel = require("../models/content");
+const marked = require("marked");
 // 引入自定义的分页渲染模块
 const pagination = require("../my_modules/pagination");
 
 // 实例化Router对象
 const router = express.Router();
+
+// 配置marked
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: false,
+    breaks: false,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false
+});
 
 // 定义一个变量用来存放传递给模板的其他信息
 let other = {};
@@ -68,10 +81,13 @@ router.get("/views", (req, res) => {
     let contentId = req.query.contentId;
     // 根据id从数据库中查询文章内容
     contentModel.findById(contentId).populate(["category", "author"]).then((content) => {
+        // 使用marked渲染内容成html
+        let contentHtml = marked(content.content);
         // 渲染内容模板
         res.render("main/views", {
             userInfo: req.userInfo,
             other: other,
+            contentHtml: contentHtml,
             content: content
         });
         // 阅读量增加

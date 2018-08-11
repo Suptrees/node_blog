@@ -12,7 +12,9 @@
           </p>
           <p><%= content.description %></p>
           <hr>
-          <p><%= content.content %></p>
+          <!-- <p><%= content.content %></p> -->
+          <!-- 使用marked渲染的html -->
+          <%- contentHtml %>
       </div>
     </div>
   </div>
