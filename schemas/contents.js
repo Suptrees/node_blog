@@ -12,7 +12,8 @@ const moment = require("moment");
         添加时间，字符串
         阅读量，字符串
         简介，字符串
-        正文，字符串
+        正文，字符串,
+        评论，数组
     }
 */
 module.exports = new mongoose.Schema({
@@ -40,5 +41,9 @@ module.exports = new mongoose.Schema({
     content: {
         type: String,
         default: ""
+    },
+    comment: {
+        type: Array,
+        default: []
     }
 });
