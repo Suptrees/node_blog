@@ -18,11 +18,11 @@
           <div class="text-muted text-center">------------本文结束------------</div>
           <!-- 评论 -->
           <div class="well">
+            <input type="hidden" id="contentId" value="<%= content.id %>">
             <% if (userInfo.userid) {%>
             <div class="form-group">
               <label for="name">说点什么</label>
               <textarea class="form-control" rows="3" cols="4" placeholder="输入评论" id="comment"></textarea>
-              <input type="hidden" id="contentId" value="<%= content.id %>">
               <br>
               <button class="form-control btn btn-primary" id="comment-btn">提交</button>
             </div>
@@ -30,14 +30,6 @@
               <div class="alert alert-danger">请先登录！</div>
             <% } %>
             <div class="commentList">
-              <div>
-                <span>作者 | 时间</span>
-                <p>评论内容</p>
-              </div>
-              <div>
-                <span>作者 | 时间</span>
-                <p>评论内容</p>
-              </div>
               <div>
                 <span>作者 | 时间</span>
                 <p>评论内容</p>

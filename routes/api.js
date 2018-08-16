@@ -149,7 +149,7 @@ router.post("/user/login", (req, res, next) => {
 // 获取评论的接口
 router.get("/comment", (req, res) => {
     //  获取提交的信息
-    let contentId = req.query.contentId;
+    let contentId = req.query.contentId || "";
 
     // 根据id查询文章信息
     contentModel.findById(contentId, (err, content) => {
